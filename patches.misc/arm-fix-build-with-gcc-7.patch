@@ -1,0 +1,55 @@
+From d5841446b9cfb1727162e54312d0a90462f55ab3 Mon Sep 17 00:00:00 2001
+From: Jan Beulich <jbeulich@suse.com>
+Date: Fri, 9 Jun 2017 13:41:08 +0200
+Subject: [PATCH] arm: fix build with gcc 7
+
+The compiler dislikes duplicate "const", and the ones it complains
+about look like they we in fact meant to be placed differently.
+
+Also fix array_access_okay() (just like on x86), despite the construct
+being unused on ARM: -Wint-in-bool-context, enabled by default in
+gcc 7, doesn't like multiplication in conditional operators. "Hide" it,
+at the risk of the next compiler version becoming smarter and
+recognizing even that. (The hope is that added smartness then would
+also better deal with legitimate cases like the one here.) The change
+could have been done in access_ok(), but I think we better keep it at
+the place the compiler is actually unhappy about.
+
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Julien Grall <julien.grall@arm.com>
+master commit: 9d3011bd1cd29f8f3841bf1b64d5ead9ed1434e8
+master date: 2017-05-19 10:12:08 +0200
+---
+ xen/arch/arm/platforms/brcm.c  | 2 +-
+ xen/arch/arm/platforms/rcar2.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/xen/arch/arm/platforms/brcm.c b/xen/arch/arm/platforms/brcm.c
+index 6d8b5b9..d481b2c 100644
+--- a/xen/arch/arm/platforms/brcm.c
++++ b/xen/arch/arm/platforms/brcm.c
+@@ -271,7 +271,7 @@ static __init int brcm_init(void)
+     return brcm_populate_plat_regs();
+ }
+ 
+-static const char const *brcm_dt_compat[] __initconst =
++static const char *const brcm_dt_compat[] __initconst =
+ {
+     "brcm,bcm7445d0",
+     NULL
+diff --git a/xen/arch/arm/platforms/rcar2.c b/xen/arch/arm/platforms/rcar2.c
+index bb25751..df0ac84 100644
+--- a/xen/arch/arm/platforms/rcar2.c
++++ b/xen/arch/arm/platforms/rcar2.c
+@@ -46,7 +46,7 @@ static int __init rcar2_smp_init(void)
+     return 0;
+ }
+ 
+-static const char const *rcar2_dt_compat[] __initdata =
++static const char *const rcar2_dt_compat[] __initconst =
+ {
+     "renesas,lager",
+     NULL
+-- 
+2.1.4
+

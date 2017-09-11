@@ -6,10 +6,10 @@ Signed-off-by: Frédéric Pierret
 
 --- a/extras/mini-os/Makefile
 +++ b/extras/mini-os/Makefile
-@@ -194,7 +194,7 @@
- endif
+@@ -168,7 +168,7 @@
+ 	$(CPP) $(ASFLAGS) -P $< -o $@
  
- $(OBJ_DIR)/$(TARGET): $(OBJS) $(APP_O) arch_lib
+ $(OBJ_DIR)/$(TARGET): $(OBJS) $(APP_O) arch_lib $(TARGET_ARCH_DIR)/minios-$(MINIOS_TARGET_ARCH).lds
 -	$(LD) -r $(LDFLAGS) $(HEAD_OBJ) $(APP_O) $(OBJS) $(LDARCHLIB) $(LDLIBS) -o $@.o
 +	$(LD) -r $(LDFLAGS) $(HEAD_OBJ) $(APP_O) $(OBJS) $(LDARCHLIB) $(LDLIBS) $$(gcc -print-libgcc-file-name $(CFLAGS)) -o $@.o
  	$(OBJCOPY) -w -G $(GLOBAL_PREFIX)* -G _start $@.o $@.o
