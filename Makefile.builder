@@ -6,6 +6,7 @@ else ifeq ($(PACKAGE_SET),vm)
   ifeq ($(DIST),centos8)
   RPM_SPEC_FILES := xen.spec
   endif
+  GENTOO_BUILD_DIRS := gentoo
 
   ifeq ($(DISTRIBUTION),qubuntu)
     DEBIAN_BUILD_DIRS := debian-vm/debian
