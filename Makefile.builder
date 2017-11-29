@@ -4,6 +4,7 @@ ifeq ($(PACKAGE_SET),dom0)
 else ifeq ($(PACKAGE_SET),vm)
   RPM_SPEC_FILES := xen.spec
   ARCH_BUILD_DIRS := archlinux
+  GENTOO_BUILD_DIRS := gentoo
 
   ifneq ($(filter $(DISTRIBUTION), debian qubuntu),)
   DEBIAN_BUILD_DIRS := debian-vm/debian
