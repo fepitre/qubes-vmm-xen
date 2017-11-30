@@ -1,5 +1,6 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# Maintainer: Frédéric Pierret <frederic.epitre@orange.fr>
 
 EAPI=6
 
@@ -35,7 +36,7 @@ DEPEND="${PYTHON_DEPS}
 	sys-libs/zlib
     net-misc/bridge-utils
     "
-RDEPEND="!!app-emulation/xen"
+RDEPEND="!!app-emulation/xen !!app-emulation/xen-tools"
 PDEPEND=""
 
 RESTRICT="test splitdebug strip"
