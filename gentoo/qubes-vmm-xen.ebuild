@@ -21,8 +21,20 @@ SLOT="0"
 IUSE=""
 
 DEPEND="${PYTHON_DEPS}
-	efi? ( >=sys-devel/binutils-2.22[multitarget] )
-	!efi? ( >=sys-devel/binutils-2.22 )"
+	>=sys-devel/binutils-2.22
+	sys-devel/bin86
+	sys-devel/dev86
+    sys-power/iasl
+    x11-libs/pixman
+    sys-apps/pciutils
+	dev-libs/lzo:2
+	dev-libs/glib:2
+	dev-libs/yajl
+	dev-libs/libaio
+	dev-libs/libgcrypt:0
+	sys-libs/zlib
+    net-misc/bridge-utils
+    "
 RDEPEND="!!app-emulation/xen"
 PDEPEND=""
 
@@ -47,6 +59,12 @@ src_prepare() {
 	sed -e '/-include $(XEN_ROOT)\/.config/d' -i Config.mk || die "Couldn't	drop"
 
 	default
+}
+
+src_configure() {
+    unset CFLAGS
+    unset LDFLAGS
+    unset ASFLAGS
 }
 
 src_compile() {
