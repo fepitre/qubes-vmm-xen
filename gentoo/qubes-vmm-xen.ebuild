@@ -55,23 +55,22 @@ src_prepare() {
     EPATCH_OPTS="-p1" \
     epatch "${FILESDIR}"
 
-	# Drop .config
-	sed -e '/-include $(XEN_ROOT)\/.config/d' -i Config.mk || die "Couldn't	drop"
-
 	default
 }
 
 src_configure() {
-    unset CFLAGS
-    unset LDFLAGS
-    unset ASFLAGS
+    local myconf="--prefix=${PREFIX}/usr \
+        --disable-ocamltools \
+        --disable-blktap2
+        "
+    
+    econf ${myconf}
 }
 
 src_compile() {
-	# Send raw LDFLAGS so that --as-needed works
-	emake V=1 CC="$(tc-getCC)" LDFLAGS="$(raw-ldflags)" LD="$(tc-getLD)" -C xen ${myopt}
+    emake V=1 CC="$(tc-getCC)" LD="$(tc-getLD)" AR="$(tc-getAR)" RANLIB="$(tc-getRANLIB)" -C tools
 }
 
 src_install() {
-	emake LDFLAGS="$(raw-ldflags)" DESTDIR="${D}" -C xen ${myopt} install
+	emake LDFLAGS="$(raw-ldflags)" DESTDIR="${D}" install-tools
 }
