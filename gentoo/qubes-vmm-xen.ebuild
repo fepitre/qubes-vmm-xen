@@ -22,18 +22,18 @@ SLOT="0"
 IUSE=""
 
 DEPEND="${PYTHON_DEPS}
-	>=sys-devel/binutils-2.22
-	sys-devel/bin86
-	sys-devel/dev86
+    >=sys-devel/binutils-2.22
+    sys-devel/bin86
+    sys-devel/dev86
     sys-power/iasl
     x11-libs/pixman
     sys-apps/pciutils
-	dev-libs/lzo:2
-	dev-libs/glib:2
-	dev-libs/yajl
-	dev-libs/libaio
-	dev-libs/libgcrypt:0
-	sys-libs/zlib
+    dev-libs/lzo:2
+    dev-libs/glib:2
+    dev-libs/yajl
+    dev-libs/libaio
+    dev-libs/libgcrypt:0
+    sys-libs/zlib
     net-misc/bridge-utils
     "
 RDEPEND="!!app-emulation/xen !!app-emulation/xen-tools"
@@ -44,19 +44,19 @@ RESTRICT="test splitdebug strip"
 S="${WORKDIR}/xen-${MY_PV}"
 
 pkg_setup() {
-	python-any-r1_pkg_setup
+    python-any-r1_pkg_setup
     XEN_TARGET_ARCH="x86_64"
 }
 
 src_prepare() {
-	# QubesOS patchset
-	einfo "Apply QubesOS patch set"
+    # QubesOS patchset
+    einfo "Apply QubesOS patch set"
     EPATCH_SUFFIX="patch" \
     EPATCH_FORCE="yes" \
     EPATCH_OPTS="-p1" \
     epatch "${FILESDIR}"
 
-	default
+    default
 }
 
 src_configure() {
@@ -64,7 +64,7 @@ src_configure() {
         --disable-ocamltools \
         --disable-blktap2
         "
-    
+
     econf ${myconf}
 }
 
@@ -73,5 +73,5 @@ src_compile() {
 }
 
 src_install() {
-	emake LDFLAGS="$(raw-ldflags)" DESTDIR="${D}" install-tools
+    emake LDFLAGS="$(raw-ldflags)" DESTDIR="${D}" install-tools
 }
