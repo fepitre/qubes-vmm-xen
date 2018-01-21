@@ -64,12 +64,129 @@ Source34: core-vchan-xen
 Source35: stubdom-dhcp
 Source36: gui-common
 
-Source98: apply-patches
-Source99: series.conf
-Source100: patches.fedora
-Source101: patches.libxl
-Source102: patches.misc
-Source103: patches.qubes
+#----------------------------------------------------------------------#
+
+%define patch_options %(echo "-F0 -E -p1")
+
+# Out-of-tree patches.
+#
+# Use the following patch numbers:
+# 1000+: fedora
+# 2000+: libxl
+# 3000+: misc
+# 4000+: security
+# 5000+: qubes
+
+Patch1001: xen.fedora.efi.build.patch
+Patch1002: xen.gcc5.fix.patch
+Patch1003: xen.use.fedora.ipxe.patch
+
+Patch2001: 0001-libxl-attach-xen-pciback-only-to-PV-domains.patch
+Patch2002: 0001-tools-include-sys-sysmacros.h-on-Linux.patch
+Patch2003: 0002-libxl-attach-PCI-device-to-qemu-only-after-setting-p.patch
+Patch2004: 0003-libxl-don-t-try-to-manipulate-json-config-for-stubdo.patch
+Patch2005: libxl-Revert-libxl-Remove-redundant-setting-of-phyical-dev.patch
+Patch2006: libxl-allow-PHY-backend-for-files-allocate-loop-devi.patch
+Patch2007: libxl-do-not-call-default-block-script.patch
+Patch2008: libxl-do-not-for-backend-on-PCI-remove-when-backend-.patch
+Patch2009: libxl-fix-libxl_device_-_remove-with-driver-domain-s.patch
+Patch2010: libxl-make-nic-bridge-parameter-optional-do-not-fill.patch
+Patch2011: libxl-suspend.patch
+Patch2012: xen-libxl-error-write-perm.patch
+Patch2013: xen-libxl-stubdom-pci-create.patch
+Patch2014: xen-xl-create-quiet.patch
+
+Patch3001: 0001-Add-xen.cfg-options-for-mapbs-and-noexitboot.patch
+Patch3002: 0001-EFI-early-Add-noexit-to-inhibit-calling-ExitBootServices.patch
+Patch3003: 0001-libxl-add-more-cpuid-flags-handling.patch
+Patch3004: 0001-python-check-return-value-of-PyErr_NewException.patch
+Patch3005: 0001-xen-move-domain-lookup-for-getdomaininfo-to-the-same.patch
+Patch3006: 0002-efi-Ensure-incorrectly-typed-runtime-services-get-ma.patch
+Patch3007: 0002-python-drop-tp_getattr-implementation.patch
+Patch3008: 0003-python-use-Py_TYPE-instead-of-looking-directly-into-.patch
+Patch3009: 0004-python-initialize-specific-fields-of-PyTypeObject.patch
+Patch3010: 0005-python-use-PyBytes-PyUnicode-instead-of-PyString.patch
+Patch3011: 0006-python-use-PyLong_-for-constructing-int-type-in-Pyth.patch
+Patch3012: 0007-python-adjust-module-initalization-for-Python3.patch
+Patch3013: 0008-python-handle-long-type-in-scripts.patch
+Patch3014: 0100-minios-enhance-xenstore-available-for-stubdoms.patch
+Patch3015: 0101-libvchan-create-xenstore-entries-in-one-transaction.patch
+Patch3016: 0102-libvchan-remove-unnecessary-includes.patch
+Patch3017: 0103-minios-implement-gntalloc-interface.patch
+Patch3018: 0104-libxc-implement-gntshr-for-minios.patch
+Patch3019: 0105-stubdom-make-libvchan-available-in-stubdom.patch
+Patch3020: hvmpt01-minios-exprom-size.patch
+Patch3021: hvmpt02-disable-msix-caps.patch
+Patch3022: hvmpt03-passthrough-log.patch
+Patch3023: hvmpt04-minios-nomask-bar-addrs.patch
+Patch3024: hvmpt05-hide-pio-bars.patch
+Patch3025: hvmpt06-fix-msix.patch
+Patch3026: libvchan-Fix-cleanup-when-xc_gntshr_open-failed.patch
+Patch3027: libxc-fix-xc_gntshr_munmap-semantic.patch
+Patch3028: mini-os-link-to-libgcc.a-to-fix-build-with-gcc7.patch
+Patch3029: minios-ignore-close-0.patch
+Patch3030: minios-remove-net-device-instead-of-preparing-for-re.patch
+Patch3031: qemu-docs-utf8.patch
+Patch3032: qemu-keyboard-leds.patch
+Patch3033: stubdom-fix-vtpm-compilation-on-GCC-7.patch
+Patch3034: stubdom-gmp-compile-fix.patch
+Patch3035: tools-misc-xenlockprof-fix-possible-format-string-overflow.patch
+Patch3036: v2-tools-fix-several-format-truncation-warnings-with-GCC-7.patch
+Patch3037: vtpmmgr-make-inline-functions-static.patch
+Patch3038: xenconsole-sanitize-ESC-in-log.patch
+
+Patch4001: libxl-disable-forced-vkb-for-HVM.patch
+Patch4002: stubdom-allow-msi-enable.patch
+Patch4003: stubdom-allow-msi-irq.patch
+Patch4004: stubdom-linux-0004.patch
+Patch4005: stubdom-linux-0005.patch
+Patch4006: stubdom-linux-0006.patch
+Patch4007: stubdom-linux-cmdline.patch
+Patch4008: stubdom-linux-config-qubes-gui.patch
+Patch4009: stubdom-linux-config-stubdom-mem.patch
+Patch4010: stubdom-linux-fix-need-memory.patch
+Patch4011: stubdom-linux-libxl-do-not-force-qdisk-backend-for-cdrom.patch
+Patch4012: stubdom-linux-libxl-don-t-try-to-resolve-local-disk-path-with-stub.patch
+Patch4013: stubdom-linux-libxl-silence-dm_check_start.patch
+Patch4014: stubdom-linux-libxl-soname.patch
+Patch4015: stubdom-linux-libxl-suspend.patch
+Patch4016: stubdom-linux-pci-add-del.patch
+Patch4017: stubdom-lwip-fix-for-dhcp.patch
+Patch4018: stubdom-vbd-non-dom0-backend.patch
+Patch4019: vm-0001-hotplug-do-not-attempt-to-remove-containing-xenstore.patch
+Patch4020: xen-disable-dom0-qemu.patch
+Patch4021: xen-hotplug-external-store.patch
+Patch4022: xen-hotplug-qubesdb-update.patch
+Patch4023: xen-libxl-qubes-minimal-stubdom.patch
+Patch4024: xen-no-downloads.patch
+Patch4025: xen-stubdom-qubes-gui.patch
+Patch4026: xen-tools-qubes-vm.patch
+Patch4027: xenconsoled-enable-logging.patch
+Patch4028: xenstore-client-raw.patch
+
+Patch5001: xsa231-4.9.patch
+Patch5002: xsa232.patch
+Patch5003: xsa233.patch
+Patch5004: xsa234-4.8.patch
+Patch5005: xsa236-4.9.patch
+Patch5006: xsa237-0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+Patch5007: xsa237-0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+Patch5008: xsa237-0003-x86-MSI-disallow-redundant-enabling.patch
+Patch5009: xsa237-0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+Patch5010: xsa237-0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+Patch5011: xsa238.patch
+Patch5012: xsa239.patch
+Patch5013: xsa240-0001-x86-limit-linear-page-table-use-to-a-single-level.patch
+Patch5014: xsa240-0002-x86-mm-Disable-PV-linear-pagetables-by-default.patch
+Patch5015: xsa241-4.9.patch
+Patch5016: xsa242-4.9.patch
+Patch5017: xsa243-4.8.patch
+Patch5018: xsa244.patch
+Patch5019: xsa246-4.9.patch
+Patch5020: xsa247-0001-p2m-Always-check-to-see-if-removing-a-p2m-entry-actu.patch
+Patch5021: xsa247-0002-p2m-Check-return-value-of-p2m_set_entry-when-decreas.patch
+
+#----------------------------------------------------------------------#
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: transfig libidn-devel zlib-devel texi2html SDL-devel curl-devel
@@ -328,8 +445,131 @@ Just a few xenstore-* tools and Xen hotplug scripts needed by Qubes VMs
 %prep
 %setup -q
 
+#----------------------------------------------------------------------#
 # Apply patches
-%{SOURCE98} %{SOURCE99} %{_sourcedir}
+
+%patch1003 %{patch_options}
+%patch1001 %{patch_options}
+%patch1002 %{patch_options}
+
+# EFI workarounds
+%patch3002 %{patch_options}
+%patch3006 %{patch_options}
+%patch3001 %{patch_options}
+
+# backports
+%patch3003 %{patch_options}
+
+# Security fixes
+%patch5001 %{patch_options}
+%patch5002 %{patch_options}
+%patch5003 %{patch_options}
+%patch5004 %{patch_options}
+%patch5005 %{patch_options}
+%patch5006 %{patch_options}
+%patch5007 %{patch_options}
+%patch5008 %{patch_options}
+%patch5009 %{patch_options}
+%patch5010 %{patch_options}
+%patch5011 %{patch_options}
+%patch5012 %{patch_options}
+%patch5013 %{patch_options}
+%patch5014 %{patch_options}
+%patch5015 %{patch_options}
+%patch5016 %{patch_options}
+%patch5017 %{patch_options}
+%patch5018 %{patch_options}
+%patch5019 %{patch_options}
+%patch5020 %{patch_options}
+%patch5021 %{patch_options}
+
+# Upstreamable patches
+%patch2012 %{patch_options}
+%patch2014 %{patch_options}
+
+#patches.libxl/libxl-make-nic-bridge-parameter-optional-do-not-fill.patch
+%patch2005 %{patch_options}
+%patch2006 %{patch_options}
+%patch2007 %{patch_options}
+%patch2008 %{patch_options}
+%patch2009 %{patch_options}
+%patch2011 %{patch_options}
+%patch3034 %{patch_options}
+%patch2001 %{patch_options}
+%patch2003 %{patch_options}
+%patch2004 %{patch_options}
+%patch3020 %{patch_options}
+%patch3021 %{patch_options}
+%patch3022 %{patch_options}
+%patch3023 %{patch_options}
+%patch3024 %{patch_options}
+%patch3025 %{patch_options}
+%patch3027 %{patch_options}
+%patch3029 %{patch_options}
+%patch3026 %{patch_options}
+%patch3031 %{patch_options}
+%patch3030 %{patch_options}
+%patch3038 %{patch_options}
+%patch3032 %{patch_options}
+
+# GCC7 fixes
+%patch2002 %{patch_options}
+%patch3035 %{patch_options}
+%patch3036 %{patch_options}
+%patch3033 %{patch_options}
+%patch3037 %{patch_options}
+%patch3028 %{patch_options}
+
+# vchan for stubdom:
+%patch3014 %{patch_options}
+%patch3015 %{patch_options}
+%patch3016 %{patch_options}
+%patch3017 %{patch_options}
+%patch3018 %{patch_options}
+%patch3019 %{patch_options}
+
+# Qubes specific patches
+%patch4018 %{patch_options}
+%patch4024 %{patch_options}
+%patch4021 %{patch_options}
+%patch4025 %{patch_options}
+%patch4017 %{patch_options}
+%patch4023 %{patch_options}
+%patch4020 %{patch_options}
+%patch4001 %{patch_options}
+%patch4027 %{patch_options}
+%patch4019 %{patch_options}
+%patch4022 %{patch_options}
+
+#python3
+%patch3004 %{patch_options}
+%patch3007 %{patch_options}
+%patch3008 %{patch_options}
+%patch3009 %{patch_options}
+%patch3010 %{patch_options}
+%patch3011 %{patch_options}
+%patch3012 %{patch_options}
+%patch3013 %{patch_options}
+
+# Support for Linux based stubdom
+%patch4004 %{patch_options}
+%patch4005 %{patch_options}
+%patch4006 %{patch_options}
+%patch4014 %{patch_options}
+%patch4016 %{patch_options}
+%patch4008 %{patch_options}
+%patch4010 %{patch_options}
+%patch4009 %{patch_options}
+%patch4015 %{patch_options}
+%patch4013 %{patch_options}
+%patch4011 %{patch_options}
+%patch4012 %{patch_options}
+%patch4003 %{patch_options}
+%patch4002 %{patch_options}
+%patch4007 %{patch_options}
+%patch4028 %{patch_options}
+
+#----------------------------------------------------------------------#
 
 # Fix for glibc 2.7
 #FIXME sed 's:LIBS+=-lutil:LIBS+=-lutil -lrt:' -i tools/ioemu-qemu-xen/Makefile.target

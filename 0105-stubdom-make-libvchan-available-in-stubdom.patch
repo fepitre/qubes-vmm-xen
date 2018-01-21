@@ -1,0 +1,93 @@
+From 424f0e7d690418067e13e01496a75cfd1442e41f Mon Sep 17 00:00:00 2001
+From: Marek Marczykowski <marmarek@invisiblethingslab.com>
+Date: Mon, 22 Apr 2013 04:10:10 +0200
+Subject: [PATCH 105/105] stubdom: make libvchan available in stubdom
+Organization: Invisible Things Lab
+Cc: Marek Marczykowski <marmarek@invisiblethingslab.com>
+
+Add CONFIG_VCHAN to enable libvchan build for stubdom. By default
+disabled in all cases, but one can enable it when needed.
+
+To enable libvchan in your stubdom, you need CONFIG_VCHAN=y in
+minios.conf and append "libvchan" to target dependencies in
+stubdom/Makefile
+
+Signed-off-by: Marek Marczykowski <marmarek@invisiblethingslab.com>
+---
+ .gitignore              |  1 +
+ extras/mini-os/Makefile |  5 +++++
+ stubdom/Makefile        | 14 ++++++++++++++
+ 3 files changed, 20 insertions(+)
+
+diff --git a/.gitignore b/.gitignore
+index 6753368..d7787ff 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -128,6 +128,7 @@
+ stubdom/polarssl-*
+ stubdom/stubdompath.sh
+ stubdom/tpm_emulator-*
++stubdom/libvchan-*
+ stubdom/vtpm/vtpm_manager.h
+ stubdom/xenstore
+ stubdom/zlib-*
+diff --git a/extras/mini-os/Config.mk b/extras/mini-os/Config.mk
+index 658c159..e4f7a61 100644
+--- a/extras/mini-os/Config.mk
++++ b/extras/mini-os/Config.mk
+@@ -32,6 +32,7 @@ CONFIG_CONSFRONT ?= y
+ CONFIG_XC ?=y
+ CONFIG_LWIP ?= $(lwip)
+ CONFIG_BALLOON ?= n
++CONFIG_VCHAN ?= n
+ 
+ # Export config items as compiler directives
+ DEFINES-$(CONFIG_PARAVIRT) += -DCONFIG_PARAVIRT
+diff --git a/extras/mini-os/Makefile b/extras/mini-os/Makefile
+index 658c159..e4f7a61 100644
+--- a/extras/mini-os/Makefile
++++ b/extras/mini-os/Makefile
+@@ -164,6 +164,10 @@ APP_LDLIBS += -lm
+ LDLIBS += -lc
+ endif
+ 
++ifeq ($(CONFIG_VCHAN),y)
++APP_LDLIBS += -L$(XEN_ROOT)/stubdom/libvchan-$(XEN_TARGET_ARCH) -lxenvchan
++endif
++
+ ifneq ($(APP_OBJS)-$(lwip),-y)
+ OBJS := $(filter-out $(OBJ_DIR)/daytime.o, $(OBJS))
+ endif
+--- xen-4.7.0/stubdom/Makefile.orig	2016-06-20 13:38:15.000000000 +0300
++++ xen-4.7.0/stubdom/Makefile	2016-07-17 01:50:56.853000000 +0300
+@@ -349,6 +350,11 @@
+ 	  ln -sf $(XEN_ROOT)/tools/libxc/include/*.h include/ && \
+ 	  ln -sf $(XEN_ROOT)/tools/libxc/*.c . && \
+ 	  ln -sf $(XEN_ROOT)/tools/libxc/Makefile . )
++	mkdir -p libvchan-$(XEN_TARGET_ARCH)
++	[ -h libvchan-$(XEN_TARGET_ARCH) ] || ( cd libvchan-$(XEN_TARGET_ARCH) && \
++	  ln -sf $(XEN_ROOT)/tools/libvchan/*.c . && \
++	  ln -sf $(XEN_ROOT)/tools/libvchan/*.h . && \
++	  ln -sf $(XEN_ROOT)/tools/libvchan/Makefile . )
+ 	mkdir -p xenstore/include
+ 	[ -h xenstore/Makefile ] || ( cd xenstore && \
+ 	  ln -sf $(XEN_ROOT)/tools/xenstore/*.c . && \
+@@ -422,6 +428,15 @@
+  libxc-$(XEN_TARGET_ARCH)/libxenguest.a: libxc-$(XEN_TARGET_ARCH)/libxenctrl.a
+ 
+ #######
++# libvchan
++#######
++
++.PHONY: libvchan
++libvchan: libvchan-$(XEN_TARGET_ARCH)/libxenvchan.a
++libvchan-$(XEN_TARGET_ARCH)/libxenvchan.a:
++	CPPFLAGS="$(TARGET_CPPFLAGS)" CFLAGS="$(TARGET_CFLAGS)" $(MAKE) DESTDIR= -C libvchan-$(XEN_TARGET_ARCH) libxenvchan.a
++
++#######
+ # ioemu
+ #######
+ 
+-- 
+1.8.1.4
+
