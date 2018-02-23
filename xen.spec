@@ -64,12 +64,156 @@ Source34: core-vchan-xen
 Source35: stubdom-dhcp
 Source36: gui-common
 
-Source98: apply-patches
-Source99: series.conf
-Source100: patches.fedora
-Source101: patches.libxl
-Source102: patches.misc
-Source103: patches.qubes
+# Out-of-tree patches.
+#
+# Use the following patch numbers:
+# 1000+: fedora
+# 2000+: libxl
+# 3000+: misc
+# 4000+: qubes
+
+Patch1001: xen.use.fedora.ipxe.patch
+Patch1002: xen.fedora.efi.build.patch
+Patch1003: xen.gcc5.fix.patch
+
+# EFI workarounds
+Patch3001: 0001-EFI-early-Add-noexit-to-inhibit-calling-ExitBootServices.patch
+Patch3002: 0002-efi-Ensure-incorrectly-typed-runtime-services-get-ma.patch
+Patch3003: 0001-Add-xen.cfg-options-for-mapbs-and-noexitboot.patch
+
+# backports
+Patch3004: 0001-libxl-add-more-cpuid-flags-handling.patch
+Patch3005: libxc-panic-when-trying-to-create-a-PVH-guest-withou.patch
+
+# PVH backports
+Patch3006: 88e43f9a-acpi-make-pmtimer-optional-in-FADT.patch
+Patch3007: b5419306-acpi-power-and-sleep-ACPI-buttons-are-not-emulated-f.patch
+Patch3008: aff79e7a-acpi-PVH-guests-need-_E02-method.patch
+Patch3009: 3b7a1b85-libacpi-add-_FADT_-to-the-FADT-boot-flags-definition.patch
+Patch3010: 3031b10e-libacpi-set-FADT-boot-flag-to-notify-lack-of-VGA-for.patch
+Patch3011: 4604e0b5-libacpi-don-t-announce-a-8042-controller-in-the-FADT.patch
+Patch3012: c281cd3b-libacpi-update-FADT-layout-to-support-version-5.patch
+Patch3013: 9f7fea37-libacpi-announce-that-PVHv2-has-no-CMOS-RTC-in-FADT.patch
+Patch3014: 9a70679d-firmware-rombios-fix-after-update-to-libacpi.patch
+Patch3015: 666a1ded-x86-pmtimer-move-ACPI-registers-from-PMTState-to-hvm.patch
+Patch3016: 4dbaa654-libxl-Update-xenstore-on-VCPU-hotplug-for-all-guest-.patch
+Patch3017: ea9e7fd9-libxl-add-is_default-checkers-for-string-and-timer_m.patch
+Patch3018: 5eee1677-xl-parsing-code-movement.patch
+Patch3019: 84238f2f-libxl-pvh-Add-accessor-macros-for-domain-type-and-ve.patch
+Patch3020: f41fd2fe-libxl-pvh-Use-accessor-macros-internally.patch
+Patch3021: ce297088-xl-pvh-Use-accessor-macros.patch
+Patch3022: 23adea59-MAYBE-FIX-libxl-xl-use-the-new-location-of-domain_bu.patch
+Patch3023: 3c717179-xl-introduce-a-domain-type-option.patch
+Patch3024: 46985bb4-xl-introduce-a-firmware-option.patch
+Patch3025: ded8f147-libxl-don-t-segfault-when-creating-domain-with-inval.patch
+Patch3026: e8fbb1fa-libxl-introduce-a-PVH-guest-type.patch
+Patch3027: 9cbd5666-libxl-allow-PVH-guests-to-use-a-bootloader.patch
+Patch3028: 556bb771-libxl-set-PVH-guests-to-use-the-PV-console.patch
+Patch3029: b2a9d4ab-libxl-add-PVH-support-to-domain-creation.patch
+Patch3030: 95fa85ce-libxl-remove-device-model-none-support-from-disk-rel.patch
+Patch3031: 6f766694-libxl-set-device-model-for-PVH-guests.patch
+Patch3032: 35d9650f-libxl-add-PVH-support-to-domain-building.patch
+Patch3033: 040057b2-libxl-add-PVH-support-to-domain-save-suspend.patch
+Patch3034: dfcd6be8-libxl-add-PVH-support-to-vpcu-hotplug-domain-destruc.patch
+Patch3035: 1716a61c-libxl-add-PVH-support-to-memory-functions.patch
+Patch3036: 98733e66-libxl-PVH-guests-use-PV-nics.patch
+Patch3037: f3792730-libxl-remove-device-model-none-support-from-stream-f.patch
+Patch3038: 1c0771fc-libxl-add-PVH-support-to-USB.patch
+Patch3039: b6a0564b-libxl-add-PVH-support-to-x86-functions.patch
+Patch3040: 0f1d3c78-xl-add-PVH-as-a-guest-type.patch
+Patch3041: 6d1a9bcb-libxl-remove-device-model-none-from-IDL.patch
+Patch3042: 60efd677-xl-Don-t-warn-on-using-deprecated-mode-selection.patch
+
+# Security fixes
+
+
+# Upstreamable patches
+Patch2001: xen-libxl-error-write-perm.patch
+Patch2002: xen-xl-create-quiet.patch
+#Patch2003: libxl-make-nic-bridge-parameter-optional-do-not-fill.patch
+Patch2004: libxl-Revert-libxl-Remove-redundant-setting-of-phyical-dev.patch
+Patch2005: libxl-allow-PHY-backend-for-files-allocate-loop-devi.patch
+Patch2006: libxl-do-not-call-default-block-script.patch
+Patch2007: libxl-do-not-for-backend-on-PCI-remove-when-backend-.patch
+Patch2008: libxl-fix-libxl_device_-_remove-with-driver-domain-s.patch
+Patch2009: libxl-suspend.patch
+Patch3043: stubdom-gmp-compile-fix.patch
+Patch2010: 0001-libxl-attach-xen-pciback-only-to-PV-domains.patch
+Patch2011: 0002-libxl-attach-PCI-device-to-qemu-only-after-setting-p.patch
+Patch2012: 0003-libxl-don-t-try-to-manipulate-json-config-for-stubdo.patch
+Patch2013: 0001-libxl-do-not-fail-device-removal-if-backend-domain-i.patch
+Patch3044: hvmpt01-minios-exprom-size.patch
+Patch3045: hvmpt02-disable-msix-caps.patch
+Patch3046: hvmpt03-passthrough-log.patch
+Patch3047: hvmpt04-minios-nomask-bar-addrs.patch
+Patch3048: hvmpt05-hide-pio-bars.patch
+Patch3049: hvmpt06-fix-msix.patch
+Patch3050: libxc-fix-xc_gntshr_munmap-semantic.patch
+Patch3051: minios-ignore-close-0.patch
+Patch3052: libvchan-Fix-cleanup-when-xc_gntshr_open-failed.patch
+Patch3053: qemu-docs-utf8.patch
+Patch3054: minios-remove-net-device-instead-of-preparing-for-re.patch
+Patch3055: xenconsole-sanitize-ESC-in-log.patch
+Patch3056: qemu-keyboard-leds.patch
+
+# GCC7 fixes
+Patch2014: 0001-tools-include-sys-sysmacros.h-on-Linux.patch
+Patch3057: tools-misc-xenlockprof-fix-possible-format-string-overflow.patch
+Patch3058: v2-tools-fix-several-format-truncation-warnings-with-GCC-7.patch
+Patch3059: stubdom-fix-vtpm-compilation-on-GCC-7.patch
+Patch3060: vtpmmgr-make-inline-functions-static.patch
+Patch3061: mini-os-link-to-libgcc.a-to-fix-build-with-gcc7.patch
+
+# TODO? Patch2015: xen-libxl-stubdom-pci-create.patch
+
+# vchan for stubdom:
+Patch3062: 0100-minios-enhance-xenstore-available-for-stubdoms.patch
+Patch3063: 0101-libvchan-create-xenstore-entries-in-one-transaction.patch
+Patch3064: 0102-libvchan-remove-unnecessary-includes.patch
+Patch3065: 0103-minios-implement-gntalloc-interface.patch
+Patch3066: 0104-libxc-implement-gntshr-for-minios.patch
+Patch3067: 0105-stubdom-make-libvchan-available-in-stubdom.patch
+
+# Qubes specific patches
+Patch4001: stubdom-vbd-non-dom0-backend.patch
+Patch4002: xen-no-downloads.patch
+Patch4003: xen-hotplug-external-store.patch
+Patch4004: xen-stubdom-qubes-gui.patch
+Patch4005: stubdom-lwip-fix-for-dhcp.patch
+Patch4006: xen-libxl-qubes-minimal-stubdom.patch
+Patch4007: xen-disable-dom0-qemu.patch
+Patch4008: libxl-disable-forced-vkb-for-HVM.patch
+Patch4009: xenconsoled-enable-logging.patch
+Patch4010: vm-0001-hotplug-do-not-attempt-to-remove-containing-xenstore.patch
+Patch4011: xen-hotplug-qubesdb-update.patch
+
+#python3
+Patch3068: 0001-python-check-return-value-of-PyErr_NewException.patch
+Patch3069: 0002-python-drop-tp_getattr-implementation.patch
+Patch3070: 0003-python-use-Py_TYPE-instead-of-looking-directly-into-.patch
+Patch3071: 0004-python-initialize-specific-fields-of-PyTypeObject.patch
+Patch3072: 0005-python-use-PyBytes-PyUnicode-instead-of-PyString.patch
+Patch3073: 0006-python-use-PyLong_-for-constructing-int-type-in-Pyth.patch
+Patch3074: 0007-python-adjust-module-initalization-for-Python3.patch
+Patch3075: 0008-python-handle-long-type-in-scripts.patch
+
+# Support for Linux based stubdom
+Patch4012: stubdom-linux-0004.patch
+Patch4013: stubdom-linux-0005.patch
+Patch4014: stubdom-linux-0006.patch
+Patch4015: stubdom-linux-libxl-soname.patch
+Patch4016: stubdom-linux-pci-add-del.patch
+Patch4017: stubdom-linux-config-qubes-gui.patch
+Patch4018: stubdom-linux-fix-need-memory.patch
+Patch4019: stubdom-linux-config-stubdom-mem.patch
+Patch4020: stubdom-linux-libxl-suspend.patch
+Patch4021: stubdom-linux-libxl-silence-dm_check_start.patch
+Patch4022: stubdom-linux-libxl-do-not-force-qdisk-backend-for-cdrom.patch
+Patch4023: stubdom-linux-libxl-don-t-try-to-resolve-local-disk-path-with-stub.patch
+Patch4024: stubdom-allow-msi-irq.patch
+Patch4025: stubdom-allow-msi-enable.patch
+Patch4026: stubdom-linux-cmdline.patch
+Patch4027: xenstore-client-raw.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: transfig libidn-devel zlib-devel texi2html SDL-devel curl-devel
@@ -328,10 +472,7 @@ Provides: xen-qubes-vm-essentials = %{epoch}:%{version}-%{release}
 Just a few xenstore-* tools and Xen hotplug scripts needed by Qubes VMs
 
 %prep
-%setup -q
-
-# Apply patches
-%{SOURCE98} %{SOURCE99} %{_sourcedir}
+%autosetup -p1
 
 # Fix for glibc 2.7
 #FIXME sed 's:LIBS+=-lutil:LIBS+=-lutil -lrt:' -i tools/ioemu-qemu-xen/Makefile.target
