@@ -145,6 +145,7 @@ Patch706: patch-mini-os-link-to-libgcc.a-to-fix-build-with-gcc7.patch
 # GCC8 fixes
 Patch714: patch-tools-kdd-mute-spurious-gcc-warning.patch
 Patch715: patch-stubdom-apply-gcc-8-fix-for-tpm-emulator.patch
+patch716: patch-gcc8-temporarly-disable-fuzz-SUBDIRS.patch
 
 # vchan for stubdom:
 Patch801: patch-0100-minios-enhance-xenstore-available-for-stubdoms.patch

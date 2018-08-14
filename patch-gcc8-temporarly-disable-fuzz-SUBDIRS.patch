@@ -1,0 +1,25 @@
+From 958a29f252d8c12cd8b03c840dffcda584395f0c Mon Sep 17 00:00:00 2001
+From: fepitre <frederic.epitre@orange.fr>
+Date: Fri, 17 Aug 2018 14:26:39 +0200
+Subject: [PATCH] gcc8: temporarly disable 'fuzz' SUBDIRS
+
+---
+ tools/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/Makefile b/tools/Makefile
+index 67977ad850..610db88f85 100644
+--- a/tools/Makefile
++++ b/tools/Makefile
+@@ -8,7 +8,7 @@ SUBDIRS-y :=
+ SUBDIRS-y += libs
+ SUBDIRS-y += libxc
+ SUBDIRS-y += flask
+-SUBDIRS-y += fuzz
++#SUBDIRS-y += fuzz
+ SUBDIRS-y += xenstore
+ SUBDIRS-y += misc
+ SUBDIRS-y += examples
+-- 
+2.17.1
+
