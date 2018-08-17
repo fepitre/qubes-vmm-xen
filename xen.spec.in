@@ -35,7 +35,7 @@
 %ifnarch x86_64 aarch64
 %define build_efi 0
 %endif
-%if %build_efi && "%dist" < ".fc26"
+%if %build_efi
 %ifarch x86_64
 %define efiming 1
 %else
