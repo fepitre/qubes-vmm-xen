@@ -30,6 +30,12 @@
 
 %define _missing_build_ids_terminate_build 0
 
+%if 0%{?centos} >= 8
+%define build_docs 0
+%define build_hyp 0
+%define build_ovmf 0
+%endif
+
 # Hypervisor ABI
 %define hv_abi 4.8
 
