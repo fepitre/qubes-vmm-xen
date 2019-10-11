@@ -337,7 +337,7 @@ Requires: python2-lxml
 Requires: python-lxml
 %endif
 Requires: udev >= 059
-Requires: xen-runtime = %{version}-%{release}
+Requires: xen-runtime = %{epoch}:%{version}-%{release}
 # Not strictly a dependency, but kpartx is by far the most useful tool right
 # now for accessing domU data from within a dom0 so bring it in when the user
 # installs xen.
@@ -373,7 +373,7 @@ Xen hypervisor
 %package -n python2-%{name}
 Summary: Python2 bindings for Xen tools
 Group: Development/Libraries
-Requires: xen-libs = %{version}-%{release}
+Requires: xen-libs = %{epoch}:%{version}-%{release}
 Requires: python2
 %{?python_provide:%python_provide python2-%{name}}
 
@@ -387,7 +387,7 @@ and xen.lowlevel.xc modules.
 %package -n python%{python3_pkgversion}-%{name}
 Summary: Python3 bindings for Xen tools
 Group: Development/Libraries
-Requires: xen-libs = %{version}-%{release}
+Requires: xen-libs = %{epoch}:%{version}-%{release}
 Requires: python3
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{name}}
 
@@ -402,7 +402,7 @@ Group: Development/Libraries
 Requires(pre): /sbin/ldconfig
 Requires(post): /sbin/ldconfig
 Requires: xen-licenses
-Provides: xen-libs = %{version}-%{release}
+Provides: xen-libs = %{epoch}:%{version}-%{release}
 Obsoletes: xen-qubes-vm-libs < %{epoch}:%{version}-%{release}
 # ifup/ifdown arguments dropped
 Conflicts: xen-hvm-stubdom-linux < 1.0.10
@@ -417,11 +417,11 @@ which manage Xen virtual machines.
 %package runtime
 Summary: Core Xen runtime environment
 Group: Development/Libraries
-Requires: xen-libs = %{version}-%{release}
+Requires: xen-libs = %{epoch}:%{version}-%{release}
 # Ensure we at least have a suitable kernel installed, though we can't
 # force user to actually boot it.
 Requires: xen-hypervisor-abi = %{hv_abi}
-Provides: xen-runtime = %{version}-%{release}
+Provides: xen-runtime = %{epoch}:%{version}-%{release}
 
 %description runtime
 This package contains the runtime programs and daemons which
@@ -451,9 +451,9 @@ This package contains the Xen documentation.
 %package devel
 Summary: Development libraries for Xen tools
 Group: Development/Libraries
-Requires: xen-libs = %{version}-%{release}
+Requires: xen-libs = %{epoch}:%{version}-%{release}
 Requires: libuuid-devel
-Provides: xen-devel = %{version}-%{release}
+Provides: xen-devel = %{epoch}:%{version}-%{release}
 
 %description devel
 This package contains what's needed to develop applications
@@ -473,7 +473,7 @@ to build the xen packages.
 %package ocaml
 Summary: Ocaml libraries for Xen tools
 Group: Development/Libraries
-Requires: ocaml-runtime, xen-libs = %{version}-%{release}
+Requires: ocaml-runtime, xen-libs = %{epoch}:%{version}-%{release}
 
 %description ocaml
 This package contains libraries for ocaml tools to manage Xen
@@ -483,7 +483,7 @@ virtual machines.
 %package ocaml-devel
 Summary: Ocaml development libraries for Xen tools
 Group: Development/Libraries
-Requires: xen-ocaml = %{version}-%{release}
+Requires: xen-ocaml = %{epoch}:%{version}-%{release}
 
 %description ocaml-devel
 This package contains libraries for developing ocaml tools to
@@ -492,15 +492,15 @@ manage Xen virtual machines.
 
 %package hvm
 Summary: Loader and device-model for HVM
-Requires: xen-libs = %{version}-%{release}
-Requires: xen-runtime = %{version}-%{release}
+Requires: xen-libs = %{epoch}:%{version}-%{release}
+Requires: xen-runtime = %{epoch}:%{version}-%{release}
 
 %description hvm
 This package contains files for HVM domains, especially stubdomain with device model.
 
 %package qemu-tools
 Summary: Qemu disk tools bundled with Xen
-Requires: xen-hvm = %{version}-%{release}
+Requires: xen-hvm = %{epoch}:%{version}-%{release}
 Provides: qemu-img = 0.10.2
 Conflicts: qemu-img
 
