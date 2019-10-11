@@ -27,13 +27,14 @@
 %endif
 %define with_python2 1
 %define with_python3 1
-
+%define build_stubdom 1
 %define _missing_build_ids_terminate_build 0
 
 %if 0%{?centos} >= 8
-%define build_docs 0
 %define build_hyp 0
 %define build_ovmf 0
+%define build_efi 0
+%define build_stubdom 0
 %endif
 
 # Hypervisor ABI
@@ -578,7 +579,9 @@ make %{?_smp_mflags} %{?efi_flags} prefix=/usr dist-xen
 make %{?_smp_mflags} %{?ocaml_flags} prefix=/usr dist-tools
 make                 prefix=/usr dist-docs
 unset CFLAGS
+%if %build_stubdom
 make %{?ocaml_flags} dist-stubdom
+%endif
 
 %if %with_python2
 make PYTHON=%{__python2} -C tools/python
@@ -604,7 +607,9 @@ export PYTHON=%{__python2}
 make DESTDIR=%{buildroot} %{?efi_flags}  prefix=/usr install-xen
 make DESTDIR=%{buildroot} %{?ocaml_flags} prefix=/usr install-tools
 make DESTDIR=%{buildroot} prefix=/usr install-docs
+%if %build_stubdom
 make DESTDIR=%{buildroot} %{?ocaml_flags} prefix=/usr install-stubdom
+%endif
 %if %build_efi
 mv %{buildroot}/boot/efi/efi %{buildroot}/boot/efi/EFI
 %endif
@@ -726,6 +731,10 @@ find . -path licensedir -prune -o -path stubdom/ioemu -prune -o \
   mkdir -p licensedir/`dirname $file`
   install -m 644 $file licensedir/$file
 done
+
+%if ! %build_hyp
+rm -rf %{buildroot}/usr/lib/debug/xen*
+%endif
 
 ############ all done now ############
 
@@ -907,10 +916,12 @@ rm -rf %{buildroot}
 # The firmware
 %ifarch %{ix86} x86_64
 %dir /usr/lib/%{name}/boot
+%if %build_stubdom
 /usr/lib/xen/boot/xenstore-stubdom.gz
 /usr/lib/xen/boot/pv-grub*.gz
 /usr/lib/xen/boot/vtpm-stubdom.gz
 /usr/lib/xen/boot/vtpmmgr-stubdom.gz
+%endif
 %endif
 # General Xen state
 %dir %{_localstatedir}/lib/%{name}
@@ -1027,17 +1038,19 @@ rm -rf %{buildroot}
 %files hvm
 # The firmware
 %ifnarch ia64
-/usr/lib/%{name}/bin/stubdom-dm
 /usr/lib/%{name}/bin/qemu-dm
 /usr/lib/%{name}/bin/qemu-img
 /usr/lib/%{name}/bin/qemu-io
 /usr/lib/%{name}/bin/qemu-nbd
 /usr/lib/%{name}/bin/qemu-system-i386
-/usr/lib/%{name}/bin/stubdompath.sh
 /usr/lib/%{name}/bin/xenpaging
+%if %build_stubdom
+/usr/lib/%{name}/bin/stubdom-dm
+/usr/lib/%{name}/bin/stubdompath.sh
+/usr/lib/xen/boot/ioemu-stubdom.gz
+%endif
 # HVM loader is always in /usr/lib regardless of multilib
 /usr/lib/xen/boot/hvmloader
-/usr/lib/xen/boot/ioemu-stubdom.gz
 /usr/lib/xen/boot/ovmf.bin
 %endif
 
