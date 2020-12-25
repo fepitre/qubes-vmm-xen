@@ -576,7 +576,11 @@ rm -rf %{buildroot}/%{_unitdir}/oxenstored.service
 %endif
 
 %if %build_ovmf
+%if 0%{?rhel} >= 8
+cat /usr/share/OVMF/OVMF_{VARS,CODE.secboot}.fd >%{buildroot}%{_libexecdir}/%{name}/boot/ovmf.bin
+%else
 cat /usr/share/OVMF/OVMF_{VARS,CODE}.fd >%{buildroot}%{_libexecdir}/%{name}/boot/ovmf.bin
+%endif
 %endif
 
 ############ fixup files in /etc ############
