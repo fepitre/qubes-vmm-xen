@@ -421,7 +421,7 @@ mkdir -p dist/install%{_libdir}/ocaml/stublibs
 export EXTRA_CFLAGS_XEN_TOOLS="$RPM_OPT_FLAGS -Wno-error=declaration-after-statement"
 export EXTRA_CFLAGS_QEMU_TRADITIONAL="$RPM_OPT_FLAGS"
 export EXTRA_CFLAGS_QEMU_XEN="$RPM_OPT_FLAGS"
-export PYTHON="%{__python3}"
+export PYTHON="/usr/bin/python%{python3_pkgversion}"
 export KCONFIG_CONFIG=%{SOURCE3}
 export XEN_CONFIG_EXPERT=y
 %if %build_hyp
